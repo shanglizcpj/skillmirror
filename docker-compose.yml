@@ -1,0 +1,75 @@
+name: skillmirror
+
+services:
+  backend:
+    image: skillmirror-backend:latest
+    container_name: skillmirror-backend
+
+    env_file:
+      - ./backend/.env
+
+    environment:
+      SKILLMIRROR_A_BASE_URL: http://host.docker.internal:8000
+      SKILLMIRROR_ORCHESTRATOR_DB_PATH: /app/data/skillmirror_orchestrator.db
+      SKILLMIRROR_ENABLE_FAILURE_TESTS: "0"
+
+    ports:
+      - "8001:8001"
+
+    volumes:
+      - ./backend/data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    restart: unless-stopped
+
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import urllib.request;
+          urllib.request.urlopen(
+          'http://127.0.0.1:8001/health',
+          timeout=3)
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+    networks:
+      - skillmirror-network
+
+  frontend:
+    image: skillmirror-frontend:latest
+    container_name: skillmirror-frontend
+
+    depends_on:
+      backend:
+        condition: service_healthy
+
+    ports:
+      - "8080:80"
+
+    restart: unless-stopped
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget -q -O - http://127.0.0.1/health || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+    networks:
+      - skillmirror-network
+
+
+networks:
+  skillmirror-network:
+    name: skillmirror-network
+    driver: bridge

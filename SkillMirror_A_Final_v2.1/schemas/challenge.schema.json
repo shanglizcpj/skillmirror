@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SkillMirror Internal Challenge",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "challenge_id", "target_skill", "target_subskill",
+    "difficulty", "challenge_type", "title", "task_description", "entry_point",
+    "starter_code", "test_cases", "hidden_bugs", "hints", "reference_solution"
+  ],
+  "properties": {
+    "schema_version": {"const": "2.0"},
+    "challenge_id": {"type": "string", "minLength": 1, "maxLength": 80},
+    "target_skill": {"enum": ["coding", "debugging", "testing", "problem_solving", "code_reading"]},
+    "target_subskill": {"type": "string", "minLength": 1, "maxLength": 80},
+    "difficulty": {"enum": ["easy", "medium", "hard", "expert"]},
+    "challenge_type": {"type": "string", "minLength": 1, "maxLength": 80},
+    "title": {"type": "string", "minLength": 1, "maxLength": 160},
+    "task_description": {"type": "string", "minLength": 1, "maxLength": 3000},
+    "entry_point": {"type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"},
+    "starter_code": {"type": "string", "minLength": 1, "maxLength": 20000},
+    "test_cases": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 30,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["case_id", "visibility", "args", "kwargs"],
+        "properties": {
+          "case_id": {"type": "string", "minLength": 1, "maxLength": 80},
+          "visibility": {"enum": ["public", "hidden"]},
+          "args": {"type": "array"},
+          "kwargs": {"type": "object"},
+          "expected": {},
+          "expected_exception": {"type": "string", "minLength": 1, "maxLength": 80}
+        },
+        "oneOf": [
+          {"required": ["expected"], "not": {"required": ["expected_exception"]}},
+          {"required": ["expected_exception"], "not": {"required": ["expected"]}}
+        ]
+      }
+    },
+    "hidden_bugs": {"type": "array", "items": {"type": "string"}, "maxItems": 20},
+    "hints": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "items": {"type": "string", "minLength": 1, "maxLength": 600}
+    },
+    "reference_solution": {"type": "string", "minLength": 1, "maxLength": 20000}
+  }
+}

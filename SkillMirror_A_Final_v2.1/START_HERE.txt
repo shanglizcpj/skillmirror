@@ -1,0 +1,16 @@
+SkillMirror 成员 A 可运行交付包 v2.1
+
+首次使用：
+1. 阅读 README.md。
+2. 安装 requirements.txt。
+3. 运行：python -m compileall -q .
+4. 运行：python -m pytest -q
+5. 运行：python demo/run_a_demo.py
+6. 按 API_CONTRACT_A.md 配置三个安全环境变量。
+7. 联调成员 B：uvicorn api.app:app --host 127.0.0.1 --port 8000
+
+当前封版验证：135 项 pytest 通过；实际模拟闭环 4/4 测试通过；
+Score 84.75（provisional）；Confidence 28.7%（low）；下一目标 testing。
+
+模拟操作不是用户实验。调用者自声明 verified 无效；Evidence 必须经过 B 记录验签、
+A Verification Record 验签与规则物化，Score/Confidence 还会再次验证 A Evidence HMAC。

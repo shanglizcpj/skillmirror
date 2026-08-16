@@ -1,0 +1,168 @@
+{
+  "project": "SkillMirror",
+  "version": "2.0",
+  "scenario": "Programming Skill Assessment",
+  "language": "Python",
+  "target_user": "大学编程学习者",
+  "root_skill": {
+    "id": "programming_ability",
+    "name": "Programming Ability",
+    "name_zh": "编程综合能力",
+    "children": [
+      {
+        "id": "coding",
+        "name": "Coding",
+        "name_zh": "编码能力",
+        "source": "project_extension",
+        "children": [
+          {
+            "id": "syntax_fluency",
+            "name": "Syntax Fluency",
+            "name_zh": "语法熟练度"
+          },
+          {
+            "id": "control_flow",
+            "name": "Control Flow",
+            "name_zh": "流程控制"
+          },
+          {
+            "id": "data_handling",
+            "name": "Data Handling",
+            "name_zh": "数据处理"
+          },
+          {
+            "id": "function_design",
+            "name": "Function Design",
+            "name_zh": "函数设计"
+          },
+          {
+            "id": "code_quality",
+            "name": "Code Quality",
+            "name_zh": "代码质量"
+          }
+        ]
+      },
+      {
+        "id": "debugging",
+        "name": "Debugging",
+        "name_zh": "调试能力",
+        "source": "AB分工.docx",
+        "children": [
+          {
+            "id": "error_identification",
+            "name": "Error Identification",
+            "name_zh": "错误识别"
+          },
+          {
+            "id": "root_cause_analysis",
+            "name": "Root Cause Analysis",
+            "name_zh": "根因分析"
+          },
+          {
+            "id": "boundary_awareness",
+            "name": "Boundary Awareness",
+            "name_zh": "边界意识"
+          },
+          {
+            "id": "fix_strategy",
+            "name": "Fix Strategy",
+            "name_zh": "修复策略"
+          },
+          {
+            "id": "fix_verification",
+            "name": "Fix Verification",
+            "name_zh": "修复验证"
+          }
+        ]
+      },
+      {
+        "id": "testing",
+        "name": "Testing",
+        "name_zh": "测试能力",
+        "source": "AB分工.docx",
+        "children": [
+          {
+            "id": "test_case_design",
+            "name": "Test Case Design",
+            "name_zh": "测试用例设计"
+          },
+          {
+            "id": "boundary_testing",
+            "name": "Boundary Testing",
+            "name_zh": "边界测试"
+          },
+          {
+            "id": "exception_testing",
+            "name": "Exception Testing",
+            "name_zh": "异常测试"
+          },
+          {
+            "id": "result_verification",
+            "name": "Result Verification",
+            "name_zh": "结果验证"
+          }
+        ]
+      },
+      {
+        "id": "problem_solving",
+        "name": "Problem Solving",
+        "name_zh": "问题解决能力",
+        "source": "AB分工.docx",
+        "children": [
+          {
+            "id": "problem_decomposition",
+            "name": "Problem Decomposition",
+            "name_zh": "问题拆解"
+          },
+          {
+            "id": "logical_reasoning",
+            "name": "Logical Reasoning",
+            "name_zh": "逻辑推理"
+          },
+          {
+            "id": "strategy_selection",
+            "name": "Strategy Selection",
+            "name_zh": "策略选择"
+          },
+          {
+            "id": "iterative_improvement",
+            "name": "Iterative Improvement",
+            "name_zh": "迭代改进"
+          }
+        ]
+      },
+      {
+        "id": "code_reading",
+        "name": "Code Reading",
+        "name_zh": "代码阅读能力",
+        "source": "project_extension",
+        "children": [
+          {
+            "id": "control_flow_tracing",
+            "name": "Control Flow Tracing",
+            "name_zh": "执行流程追踪"
+          },
+          {
+            "id": "state_tracking",
+            "name": "State Tracking",
+            "name_zh": "状态变化追踪"
+          },
+          {
+            "id": "intent_understanding",
+            "name": "Intent Understanding",
+            "name_zh": "代码意图理解"
+          },
+          {
+            "id": "bug_spotting",
+            "name": "Bug Spotting",
+            "name_zh": "潜在问题识别"
+          }
+        ]
+      }
+    ]
+  },
+  "design_notes": {
+    "source_aligned": "一级能力以及 Debugging / Testing / Problem Solving 二级能力来自 AB分工.docx。",
+    "project_extensions": "Coding 与 Code Reading 的二级能力为项目扩展，用于形成可运行 MVP。"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SkillMirror Examiner Decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "target_skill", "target_subskill", "difficulty", "challenge_type", "mode",
+    "reason", "decision_source", "reasoning_source", "priority_breakdown"
+  ],
+  "properties": {
+    "target_skill": {"enum": ["coding", "debugging", "testing", "problem_solving", "code_reading"]},
+    "target_subskill": {"type": ["string", "null"]},
+    "difficulty": {"enum": ["easy", "medium", "hard", "expert"]},
+    "challenge_type": {"type": "string"},
+    "mode": {"enum": ["diagnostic", "teaching", "verification", "development", "stretch"]},
+    "reason": {"type": "string", "minLength": 1, "maxLength": 1200},
+    "decision_source": {"const": "deterministic_information_gain"},
+    "reasoning_source": {"enum": ["deterministic", "llm_refined_locked_decision"]},
+    "priority_breakdown": {"type": "object"}
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["problem_solving_analysis", "debugging_analysis", "testing_analysis", "reasoning_summary"],
+  "properties": {
+    "problem_solving_analysis": {"type": "string", "minLength": 1, "maxLength": 1600},
+    "debugging_analysis": {"type": "string", "minLength": 1, "maxLength": 1600},
+    "testing_analysis": {"type": "string", "minLength": 1, "maxLength": 1600},
+    "reasoning_summary": {"type": "string", "minLength": 1, "maxLength": 1600}
+  }
+}

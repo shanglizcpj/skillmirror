@@ -1,0 +1,173 @@
+[
+  {
+    "schema_version": "2.1",
+    "evidence_id": "EV-5581d23458ac1d44",
+    "rule_id": "EVR-OUTCOME-001",
+    "rule_version": "2.1.0",
+    "user_id": "U-DEMO",
+    "session_id": "SESSION-DEMO-001",
+    "challenge_id": "DBG001",
+    "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+    "challenge_type": "debugging_runtime",
+    "skill": "debugging",
+    "sub_skill": "boundary_awareness",
+    "event": "challenge_tests_passed",
+    "strength": "strong",
+    "direction": "positive",
+    "performance_score": 92,
+    "score_delta": 10,
+    "difficulty": "easy",
+    "hint_level": "level_1",
+    "reliability": 0.98,
+    "verification_refs": [
+      "HINT-DEMO-001",
+      "RUN-DEMO-002"
+    ],
+    "source_digest": "sha256:7be038944b5f21d5a746a8aae71c298a0c7952aeeb8949855b2582b02681c006",
+    "reason": "4/4 verified hidden tests passed for debugging.",
+    "timestamp": "2026-08-14T02:11:00+00:00",
+    "provenance": {
+      "version": "trust-envelope/1.0",
+      "algorithm": "HMAC-SHA256",
+      "issuer": "skillmirror-a-evidence-engine",
+      "purpose": "trusted-evidence",
+      "signature": "hmac-sha256:6261e460b6ead54af9427c562a6d2b4d0c329d77c41cc8f97e1679348e9ac189"
+    }
+  },
+  {
+    "schema_version": "2.1",
+    "evidence_id": "EV-6e4e29ad75cc2559",
+    "rule_id": "EVR-DEBUG-001",
+    "rule_version": "2.1.0",
+    "user_id": "U-DEMO",
+    "session_id": "SESSION-DEMO-001",
+    "challenge_id": "DBG001",
+    "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+    "challenge_type": "debugging_runtime",
+    "skill": "debugging",
+    "sub_skill": "fix_strategy",
+    "event": "ran_program_proactively",
+    "strength": "medium",
+    "direction": "positive",
+    "performance_score": 68,
+    "score_delta": 3,
+    "difficulty": "easy",
+    "hint_level": "none",
+    "reliability": 0.82,
+    "verification_refs": [
+      "LOG-DEMO-001"
+    ],
+    "source_digest": "sha256:0d0db2a8ae86433d781f97291bc54497acfe4f53a0ab5ec701e6ea08a9562fcf",
+    "reason": "Learner executed the program during diagnosis.",
+    "timestamp": "2026-08-14T02:11:00+00:00",
+    "provenance": {
+      "version": "trust-envelope/1.0",
+      "algorithm": "HMAC-SHA256",
+      "issuer": "skillmirror-a-evidence-engine",
+      "purpose": "trusted-evidence",
+      "signature": "hmac-sha256:3221ba97bebf07cb2bf02d099d2fba0a1db2bced26d2e65d0a8c87c97f4d2704"
+    }
+  },
+  {
+    "schema_version": "2.1",
+    "evidence_id": "EV-344992d0940a8067",
+    "rule_id": "EVR-DEBUG-002",
+    "rule_version": "2.1.0",
+    "user_id": "U-DEMO",
+    "session_id": "SESSION-DEMO-001",
+    "challenge_id": "DBG001",
+    "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+    "challenge_type": "debugging_runtime",
+    "skill": "debugging",
+    "sub_skill": "boundary_awareness",
+    "event": "designed_boundary_input_proactively",
+    "strength": "strong",
+    "direction": "positive",
+    "performance_score": 88,
+    "score_delta": 7,
+    "difficulty": "easy",
+    "hint_level": "none",
+    "reliability": 0.92,
+    "verification_refs": [
+      "LOG-DEMO-003"
+    ],
+    "source_digest": "sha256:7d3bcbc97c7be5e08f48873f5f0f9cfb287cb7e04f83be20700fb574c4ac82e0",
+    "reason": "Learner tested a boundary input.",
+    "timestamp": "2026-08-14T02:11:00+00:00",
+    "provenance": {
+      "version": "trust-envelope/1.0",
+      "algorithm": "HMAC-SHA256",
+      "issuer": "skillmirror-a-evidence-engine",
+      "purpose": "trusted-evidence",
+      "signature": "hmac-sha256:60b866577a2dbb5c6fb08808e13665b23902dfe78d8903f8b7617252d816cbc4"
+    }
+  },
+  {
+    "schema_version": "2.1",
+    "evidence_id": "EV-823b1473e8e01962",
+    "rule_id": "EVR-DEBUG-003",
+    "rule_version": "2.1.0",
+    "user_id": "U-DEMO",
+    "session_id": "SESSION-DEMO-001",
+    "challenge_id": "DBG001",
+    "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+    "challenge_type": "debugging_runtime",
+    "skill": "debugging",
+    "sub_skill": "root_cause_analysis",
+    "event": "reproduced_bug_before_modification",
+    "strength": "strong",
+    "direction": "positive",
+    "performance_score": 86,
+    "score_delta": 6,
+    "difficulty": "easy",
+    "hint_level": "none",
+    "reliability": 0.9,
+    "verification_refs": [
+      "LOG-DEMO-002"
+    ],
+    "source_digest": "sha256:fc9af8c8bcdf14b182e60526aa6004d280718b7cd7f8d73ae4faceaf6ed9586a",
+    "reason": "Learner reproduced the failure before editing.",
+    "timestamp": "2026-08-14T02:11:00+00:00",
+    "provenance": {
+      "version": "trust-envelope/1.0",
+      "algorithm": "HMAC-SHA256",
+      "issuer": "skillmirror-a-evidence-engine",
+      "purpose": "trusted-evidence",
+      "signature": "hmac-sha256:061215f8a3a7cb67f43e9d8d5752a5d55e6b24e85e7e91866910362ff811bdab"
+    }
+  },
+  {
+    "schema_version": "2.1",
+    "evidence_id": "EV-3b936925ed91e26a",
+    "rule_id": "EVR-HINT-001",
+    "rule_version": "2.1.0",
+    "user_id": "U-DEMO",
+    "session_id": "SESSION-DEMO-001",
+    "challenge_id": "DBG001",
+    "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+    "challenge_type": "debugging_runtime",
+    "skill": "problem_solving",
+    "sub_skill": "strategy_selection",
+    "event": "used_hint_level_1",
+    "strength": "medium",
+    "direction": "dependency",
+    "performance_score": null,
+    "score_delta": 0,
+    "difficulty": "easy",
+    "hint_level": "level_1",
+    "reliability": 0.98,
+    "verification_refs": [
+      "HINT-DEMO-001"
+    ],
+    "source_digest": "sha256:f832f42bc17ae4ffaf3e6c83a86ca5dd0497477dc165e561a4b694434e479c6c",
+    "reason": "Learner used a Level-1 hint.",
+    "timestamp": "2026-08-14T02:11:00+00:00",
+    "provenance": {
+      "version": "trust-envelope/1.0",
+      "algorithm": "HMAC-SHA256",
+      "issuer": "skillmirror-a-evidence-engine",
+      "purpose": "trusted-evidence",
+      "signature": "hmac-sha256:957c54c49eaac83a16f95628733275292d723f917cb2606983aa479d47e5e72a"
+    }
+  }
+]

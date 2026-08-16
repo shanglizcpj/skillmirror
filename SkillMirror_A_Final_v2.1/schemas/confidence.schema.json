@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SkillMirror Confidence Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "algorithm_version", "confidence", "confidence_percent", "confidence_status",
+    "formula", "reason", "factors", "counts", "warnings"
+  ],
+  "properties": {
+    "algorithm_version": {"type": "string"},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "confidence_percent": {"type": "number", "minimum": 0, "maximum": 100},
+    "confidence_status": {"enum": ["low", "medium", "high"]},
+    "formula": {"type": "string"},
+    "reason": {"type": "string"},
+    "factors": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["quantity", "strength", "freshness", "diversity", "consistency"],
+      "properties": {
+        "quantity": {"type": "number", "minimum": 0, "maximum": 1},
+        "strength": {"type": "number", "minimum": 0, "maximum": 1},
+        "freshness": {"type": "number", "minimum": 0, "maximum": 1},
+        "diversity": {"type": "number", "minimum": 0, "maximum": 1},
+        "consistency": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_items", "independent_sessions", "challenge_contexts"],
+      "properties": {
+        "evidence_items": {"type": "integer", "minimum": 0},
+        "independent_sessions": {"type": "integer", "minimum": 0},
+        "challenge_contexts": {"type": "integer", "minimum": 0}
+      }
+    },
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  }
+}

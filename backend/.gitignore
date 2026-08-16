@@ -1,0 +1,14 @@
+# SkillMirror local databases
+backend/data/*.db
+backend/data/*.db-shm
+backend/data/*.db-wal
+
+# Secrets
+.env
+backend/.env
+frontend/.env
+
+# Environments
+backend/.venv/
+SkillMirror_A_Final_v2.1/.venv/
+frontend/node_modules/

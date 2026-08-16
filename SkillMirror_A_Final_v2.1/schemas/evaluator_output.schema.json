@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SkillMirror Evaluator Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "problem_solving_analysis", "debugging_analysis", "testing_analysis",
+    "reasoning_summary", "evidence_candidates", "verification_records",
+    "flags", "analysis_source", "elapsed_seconds"
+  ],
+  "properties": {
+    "problem_solving_analysis": {"type": "string"},
+    "debugging_analysis": {"type": "string"},
+    "testing_analysis": {"type": "string"},
+    "reasoning_summary": {"type": "string"},
+    "evidence_candidates": {"type": "array", "items": {"type": "object"}},
+    "verification_records": {"type": "array", "items": {"type": "object"}},
+    "flags": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "analysis_source": {"enum": ["deterministic_verified_logs", "llm_text_refinement_over_locked_facts"]},
+    "elapsed_seconds": {"type": ["number", "null"], "minimum": 0}
+  }
+}

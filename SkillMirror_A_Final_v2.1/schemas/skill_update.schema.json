@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SkillMirror Explainable Skill Update",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "algorithm_version", "calculation_id", "skill_id", "previous_score",
+    "new_score", "score_status", "evidence_weight", "evidence_score",
+    "formula", "reason", "session_breakdown", "excluded_evidence"
+  ],
+  "properties": {
+    "algorithm_version": {"type": "string"},
+    "calculation_id": {"type": "string", "pattern": "^SC-[0-9a-f]{16}$"},
+    "skill_id": {"type": ["string", "null"]},
+    "previous_score": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+    "new_score": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+    "score_status": {"enum": ["unknown", "unchanged", "provisional", "updated"]},
+    "evidence_weight": {"type": "number", "minimum": 0, "maximum": 1},
+    "evidence_score": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+    "formula": {"type": "string"},
+    "reason": {"type": "string"},
+    "session_breakdown": {"type": "array"},
+    "excluded_evidence": {"type": "array"}
+  }
+}

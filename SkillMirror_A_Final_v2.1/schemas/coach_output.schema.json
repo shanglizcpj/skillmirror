@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SkillMirror Coach Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["action", "hint_level", "hint_key", "message", "source", "reason"],
+  "properties": {
+    "action": {"enum": ["prompt_to_start", "no_hint", "give_hint"]},
+    "hint_level": {"type": "integer", "minimum": 0, "maximum": 3},
+    "hint_key": {"enum": ["none", "level_1", "level_2", "level_3"]},
+    "message": {"type": "string", "minLength": 1, "maxLength": 900},
+    "source": {"enum": ["deterministic_guardrail", "deterministic_policy", "fixed_progressive_hint", "llm_guarded"]},
+    "reason": {"type": "string", "minLength": 1, "maxLength": 900}
+  }
+}

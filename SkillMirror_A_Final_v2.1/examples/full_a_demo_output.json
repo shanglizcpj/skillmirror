@@ -1,0 +1,635 @@
+{
+  "demo_disclosure": "Simulated learner action sequence for engineering verification; not a real-user experiment. Test execution is an actual isolated local subprocess run.",
+  "examiner": {
+    "target_skill": "debugging",
+    "target_subskill": "boundary_awareness",
+    "difficulty": "easy",
+    "challenge_type": "debugging_runtime",
+    "mode": "diagnostic",
+    "reason": "Skill score is Unknown; collect baseline evidence first. debugging has the highest deterministic verification priority after recent-challenge penalty.",
+    "decision_source": "deterministic_information_gain",
+    "reasoning_source": "deterministic",
+    "priority_breakdown": {
+      "coding": {
+        "priority": 0.1845,
+        "confidence_gap": 0.19,
+        "unknown_bonus": 0.0,
+        "weakness_bonus": 0.0,
+        "no_evidence_bonus": 0.08,
+        "recent_repeat_penalty": 0.0,
+        "evidence_count": 0
+      },
+      "debugging": {
+        "priority": 0.93,
+        "confidence_gap": 1.0,
+        "unknown_bonus": 0.3,
+        "weakness_bonus": 0.0,
+        "no_evidence_bonus": 0.08,
+        "recent_repeat_penalty": 0.0,
+        "evidence_count": 0
+      },
+      "testing": {
+        "priority": 0.399,
+        "confidence_gap": 0.58,
+        "unknown_bonus": 0.0,
+        "weakness_bonus": 0.0,
+        "no_evidence_bonus": 0.08,
+        "recent_repeat_penalty": 0.0,
+        "evidence_count": 0
+      },
+      "problem_solving": {
+        "priority": 0.256,
+        "confidence_gap": 0.32,
+        "unknown_bonus": 0.0,
+        "weakness_bonus": 0.0,
+        "no_evidence_bonus": 0.08,
+        "recent_repeat_penalty": 0.0,
+        "evidence_count": 0
+      },
+      "code_reading": {
+        "priority": 0.212,
+        "confidence_gap": 0.24,
+        "unknown_bonus": 0.0,
+        "weakness_bonus": 0.0,
+        "no_evidence_bonus": 0.08,
+        "recent_repeat_penalty": 0.0,
+        "evidence_count": 0
+      }
+    }
+  },
+  "challenge": {
+    "schema_version": "2.0",
+    "challenge_id": "DBG001",
+    "target_skill": "debugging",
+    "target_subskill": "boundary_awareness",
+    "difficulty": "easy",
+    "challenge_type": "debugging_runtime",
+    "title": "Repair the Order Discount Function",
+    "task_description": "修复订单折扣函数，使其正确处理空订单、单个商品和普通订单，并通过全部测试。",
+    "entry_point": "discounted_total",
+    "starter_code": "def average_price(prices):\n    total = sum(prices)\n    return total / len(prices)\n\ndef discounted_total(prices, threshold=100):\n    avg = average_price(prices)\n    total = sum(prices)\n    if avg > threshold:\n        return total * 0.9\n    return total\n",
+    "hints": [
+      "先观察失败输入与异常类型，它是否说明某个集合可能没有元素？",
+      "重点检查 average_price 在 prices 为空时的行为。",
+      "思考在执行除法前，如何为长度为 0 的情况定义合理结果。"
+    ],
+    "generation_source": "fixed_verified_template",
+    "content_hash": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+    "public_tests": [
+      {
+        "case_id": "normal",
+        "visibility": "public",
+        "args": [
+          [
+            50,
+            60
+          ]
+        ],
+        "kwargs": {},
+        "expected": 110
+      }
+    ]
+  },
+  "coach": {
+    "action": "give_hint",
+    "hint_level": 1,
+    "hint_key": "level_1",
+    "message": "先观察失败输入与异常类型，它是否说明某个集合可能没有元素？",
+    "source": "fixed_progressive_hint",
+    "reason": "Hint level selected by request/failure policy; content defaults to the validated challenge hint."
+  },
+  "actual_test_run": {
+    "passed": 4,
+    "total": 4,
+    "runner": "a_side_demo_isolated_subprocess",
+    "result_digest": "sha256:d10e88f9a7220a04c6d57376b060644a851e4b45d4fcb426ae78bddfaf7208c2"
+  },
+  "schema_version": "2.1",
+  "trust_report": {
+    "rejected_b_records": [],
+    "rejected_evidence_history": [],
+    "replayed_evidence": [],
+    "caller_verification_status_trusted": false
+  },
+  "evaluation": {
+    "problem_solving_analysis": "Learner process was reconstructed from verified logs, versions, tests and hints.",
+    "debugging_analysis": "Final verified tests: 4/4.",
+    "testing_analysis": "Learner-created boundary activity was observed.",
+    "reasoning_summary": "Evaluator proposes named events only; Evidence Engine locks rule fields and requires matching verified records.",
+    "evidence_candidates": [
+      {
+        "event": "challenge_tests_passed",
+        "verification_refs": [
+          "RUN-DEMO-002",
+          "HINT-DEMO-001"
+        ],
+        "hint_level": "level_1",
+        "reason": "4/4 verified hidden tests passed for debugging."
+      },
+      {
+        "event": "ran_program_proactively",
+        "verification_refs": [
+          "LOG-DEMO-001"
+        ],
+        "reason": "Learner executed the program during diagnosis."
+      },
+      {
+        "event": "designed_boundary_input_proactively",
+        "verification_refs": [
+          "LOG-DEMO-003"
+        ],
+        "reason": "Learner tested a boundary input."
+      },
+      {
+        "event": "reproduced_bug_before_modification",
+        "verification_refs": [
+          "LOG-DEMO-002"
+        ],
+        "reason": "Learner reproduced the failure before editing."
+      },
+      {
+        "event": "used_hint_level_1",
+        "verification_refs": [
+          "HINT-DEMO-001"
+        ],
+        "reason": "Learner used a Level-1 hint."
+      }
+    ],
+    "verification_records": [
+      {
+        "ref_id": "LOG-DEMO-001",
+        "type": "run_log",
+        "status": "verified",
+        "user_id": "U-DEMO",
+        "session_id": "SESSION-DEMO-001",
+        "challenge_id": "DBG001",
+        "timestamp": "2026-08-14T02:01:00+00:00",
+        "payload_digest": "sha256:bf6c6c382c1b46f03de2a07062bdf27ab6d5347e80167f7dceb1ccf8c41991dc",
+        "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+        "target_skill": "debugging",
+        "target_subskill": "boundary_awareness",
+        "difficulty": "easy",
+        "provenance": {
+          "version": "trust-envelope/1.0",
+          "algorithm": "HMAC-SHA256",
+          "issuer": "skillmirror-a-evaluator",
+          "purpose": "normalized-verification-record",
+          "signature": "hmac-sha256:70c352934de800cecdf4c1e805d9f8c5215ca7b921ca147c1f9a9af7ec1accde"
+        }
+      },
+      {
+        "ref_id": "LOG-DEMO-002",
+        "type": "error_reproduction_log",
+        "status": "verified",
+        "user_id": "U-DEMO",
+        "session_id": "SESSION-DEMO-001",
+        "challenge_id": "DBG001",
+        "timestamp": "2026-08-14T02:02:00+00:00",
+        "payload_digest": "sha256:870bbf527d4f1027596be234e6916453a41b77afd8e2a39a3ccd238aa4e188ec",
+        "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+        "target_skill": "debugging",
+        "target_subskill": "boundary_awareness",
+        "difficulty": "easy",
+        "provenance": {
+          "version": "trust-envelope/1.0",
+          "algorithm": "HMAC-SHA256",
+          "issuer": "skillmirror-a-evaluator",
+          "purpose": "normalized-verification-record",
+          "signature": "hmac-sha256:0321803fe680e4c2cf9cced387159ba0287bf9524581af0f9c801bf03650b93e"
+        }
+      },
+      {
+        "ref_id": "LOG-DEMO-003",
+        "type": "custom_test_log",
+        "status": "verified",
+        "user_id": "U-DEMO",
+        "session_id": "SESSION-DEMO-001",
+        "challenge_id": "DBG001",
+        "timestamp": "2026-08-14T02:04:00+00:00",
+        "payload_digest": "sha256:0cd04de9403cf602852ed090945b67a5ffd7a3b0c52143ce6637c784bb50e0c3",
+        "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+        "target_skill": "debugging",
+        "target_subskill": "boundary_awareness",
+        "difficulty": "easy",
+        "provenance": {
+          "version": "trust-envelope/1.0",
+          "algorithm": "HMAC-SHA256",
+          "issuer": "skillmirror-a-evaluator",
+          "purpose": "normalized-verification-record",
+          "signature": "hmac-sha256:0d3e6512901759cc2051cd3031f9ec78a65534e6a8604aa28291ad5b9f9f599b"
+        }
+      },
+      {
+        "ref_id": "RUN-DEMO-002",
+        "type": "hidden_test_result",
+        "status": "verified",
+        "user_id": "U-DEMO",
+        "session_id": "SESSION-DEMO-001",
+        "challenge_id": "DBG001",
+        "timestamp": "2026-08-14T02:10:00+00:00",
+        "payload_digest": "sha256:83ff1432df5b4d0e294bc2b9aa2e76d182a077b7acf2a51141e71f99bcb78384",
+        "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+        "target_skill": "debugging",
+        "target_subskill": "boundary_awareness",
+        "difficulty": "easy",
+        "provenance": {
+          "version": "trust-envelope/1.0",
+          "algorithm": "HMAC-SHA256",
+          "issuer": "skillmirror-a-evaluator",
+          "purpose": "normalized-verification-record",
+          "signature": "hmac-sha256:330806652391bc028fa809fa803f109bd20ad7a120ab69f282c3798274b48d96"
+        }
+      },
+      {
+        "ref_id": "HINT-DEMO-001",
+        "type": "hint_record",
+        "status": "verified",
+        "user_id": "U-DEMO",
+        "session_id": "SESSION-DEMO-001",
+        "challenge_id": "DBG001",
+        "timestamp": "2026-08-14T02:03:00+00:00",
+        "payload_digest": "sha256:64c008ecbcb7c8b4bc1098293759e55e98e579adc1e157a2b5d0479fd712c168",
+        "hint_level": "level_1",
+        "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+        "target_skill": "debugging",
+        "target_subskill": "boundary_awareness",
+        "difficulty": "easy",
+        "provenance": {
+          "version": "trust-envelope/1.0",
+          "algorithm": "HMAC-SHA256",
+          "issuer": "skillmirror-a-evaluator",
+          "purpose": "normalized-verification-record",
+          "signature": "hmac-sha256:779595c30ae2db40f8817f357d98620917c995e514d6b4a7f67b8a9ddd75af34"
+        }
+      }
+    ],
+    "flags": [],
+    "analysis_source": "deterministic_verified_logs",
+    "elapsed_seconds": 540
+  },
+  "evidence_materialization": {
+    "accepted": [
+      {
+        "schema_version": "2.1",
+        "evidence_id": "EV-5581d23458ac1d44",
+        "rule_id": "EVR-OUTCOME-001",
+        "rule_version": "2.1.0",
+        "user_id": "U-DEMO",
+        "session_id": "SESSION-DEMO-001",
+        "challenge_id": "DBG001",
+        "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+        "challenge_type": "debugging_runtime",
+        "skill": "debugging",
+        "sub_skill": "boundary_awareness",
+        "event": "challenge_tests_passed",
+        "strength": "strong",
+        "direction": "positive",
+        "performance_score": 92,
+        "score_delta": 10,
+        "difficulty": "easy",
+        "hint_level": "level_1",
+        "reliability": 0.98,
+        "verification_refs": [
+          "HINT-DEMO-001",
+          "RUN-DEMO-002"
+        ],
+        "source_digest": "sha256:7be038944b5f21d5a746a8aae71c298a0c7952aeeb8949855b2582b02681c006",
+        "reason": "4/4 verified hidden tests passed for debugging.",
+        "timestamp": "2026-08-14T02:11:00+00:00",
+        "provenance": {
+          "version": "trust-envelope/1.0",
+          "algorithm": "HMAC-SHA256",
+          "issuer": "skillmirror-a-evidence-engine",
+          "purpose": "trusted-evidence",
+          "signature": "hmac-sha256:6261e460b6ead54af9427c562a6d2b4d0c329d77c41cc8f97e1679348e9ac189"
+        }
+      },
+      {
+        "schema_version": "2.1",
+        "evidence_id": "EV-6e4e29ad75cc2559",
+        "rule_id": "EVR-DEBUG-001",
+        "rule_version": "2.1.0",
+        "user_id": "U-DEMO",
+        "session_id": "SESSION-DEMO-001",
+        "challenge_id": "DBG001",
+        "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+        "challenge_type": "debugging_runtime",
+        "skill": "debugging",
+        "sub_skill": "fix_strategy",
+        "event": "ran_program_proactively",
+        "strength": "medium",
+        "direction": "positive",
+        "performance_score": 68,
+        "score_delta": 3,
+        "difficulty": "easy",
+        "hint_level": "none",
+        "reliability": 0.82,
+        "verification_refs": [
+          "LOG-DEMO-001"
+        ],
+        "source_digest": "sha256:0d0db2a8ae86433d781f97291bc54497acfe4f53a0ab5ec701e6ea08a9562fcf",
+        "reason": "Learner executed the program during diagnosis.",
+        "timestamp": "2026-08-14T02:11:00+00:00",
+        "provenance": {
+          "version": "trust-envelope/1.0",
+          "algorithm": "HMAC-SHA256",
+          "issuer": "skillmirror-a-evidence-engine",
+          "purpose": "trusted-evidence",
+          "signature": "hmac-sha256:3221ba97bebf07cb2bf02d099d2fba0a1db2bced26d2e65d0a8c87c97f4d2704"
+        }
+      },
+      {
+        "schema_version": "2.1",
+        "evidence_id": "EV-344992d0940a8067",
+        "rule_id": "EVR-DEBUG-002",
+        "rule_version": "2.1.0",
+        "user_id": "U-DEMO",
+        "session_id": "SESSION-DEMO-001",
+        "challenge_id": "DBG001",
+        "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+        "challenge_type": "debugging_runtime",
+        "skill": "debugging",
+        "sub_skill": "boundary_awareness",
+        "event": "designed_boundary_input_proactively",
+        "strength": "strong",
+        "direction": "positive",
+        "performance_score": 88,
+        "score_delta": 7,
+        "difficulty": "easy",
+        "hint_level": "none",
+        "reliability": 0.92,
+        "verification_refs": [
+          "LOG-DEMO-003"
+        ],
+        "source_digest": "sha256:7d3bcbc97c7be5e08f48873f5f0f9cfb287cb7e04f83be20700fb574c4ac82e0",
+        "reason": "Learner tested a boundary input.",
+        "timestamp": "2026-08-14T02:11:00+00:00",
+        "provenance": {
+          "version": "trust-envelope/1.0",
+          "algorithm": "HMAC-SHA256",
+          "issuer": "skillmirror-a-evidence-engine",
+          "purpose": "trusted-evidence",
+          "signature": "hmac-sha256:60b866577a2dbb5c6fb08808e13665b23902dfe78d8903f8b7617252d816cbc4"
+        }
+      },
+      {
+        "schema_version": "2.1",
+        "evidence_id": "EV-823b1473e8e01962",
+        "rule_id": "EVR-DEBUG-003",
+        "rule_version": "2.1.0",
+        "user_id": "U-DEMO",
+        "session_id": "SESSION-DEMO-001",
+        "challenge_id": "DBG001",
+        "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+        "challenge_type": "debugging_runtime",
+        "skill": "debugging",
+        "sub_skill": "root_cause_analysis",
+        "event": "reproduced_bug_before_modification",
+        "strength": "strong",
+        "direction": "positive",
+        "performance_score": 86,
+        "score_delta": 6,
+        "difficulty": "easy",
+        "hint_level": "none",
+        "reliability": 0.9,
+        "verification_refs": [
+          "LOG-DEMO-002"
+        ],
+        "source_digest": "sha256:fc9af8c8bcdf14b182e60526aa6004d280718b7cd7f8d73ae4faceaf6ed9586a",
+        "reason": "Learner reproduced the failure before editing.",
+        "timestamp": "2026-08-14T02:11:00+00:00",
+        "provenance": {
+          "version": "trust-envelope/1.0",
+          "algorithm": "HMAC-SHA256",
+          "issuer": "skillmirror-a-evidence-engine",
+          "purpose": "trusted-evidence",
+          "signature": "hmac-sha256:061215f8a3a7cb67f43e9d8d5752a5d55e6b24e85e7e91866910362ff811bdab"
+        }
+      },
+      {
+        "schema_version": "2.1",
+        "evidence_id": "EV-3b936925ed91e26a",
+        "rule_id": "EVR-HINT-001",
+        "rule_version": "2.1.0",
+        "user_id": "U-DEMO",
+        "session_id": "SESSION-DEMO-001",
+        "challenge_id": "DBG001",
+        "challenge_digest": "sha256:714a2d44a2dcce25e9c15f79e18e5d82589c50471cb0bce9866141f82e27ed4a",
+        "challenge_type": "debugging_runtime",
+        "skill": "problem_solving",
+        "sub_skill": "strategy_selection",
+        "event": "used_hint_level_1",
+        "strength": "medium",
+        "direction": "dependency",
+        "performance_score": null,
+        "score_delta": 0,
+        "difficulty": "easy",
+        "hint_level": "level_1",
+        "reliability": 0.98,
+        "verification_refs": [
+          "HINT-DEMO-001"
+        ],
+        "source_digest": "sha256:f832f42bc17ae4ffaf3e6c83a86ca5dd0497477dc165e561a4b694434e479c6c",
+        "reason": "Learner used a Level-1 hint.",
+        "timestamp": "2026-08-14T02:11:00+00:00",
+        "provenance": {
+          "version": "trust-envelope/1.0",
+          "algorithm": "HMAC-SHA256",
+          "issuer": "skillmirror-a-evidence-engine",
+          "purpose": "trusted-evidence",
+          "signature": "hmac-sha256:957c54c49eaac83a16f95628733275292d723f917cb2606983aa479d47e5e72a"
+        }
+      }
+    ],
+    "rejected": [],
+    "rules_version": "2.1.0"
+  },
+  "score": {
+    "algorithm_version": "skill-score/2.1.0",
+    "calculation_id": "SC-cad9e621f30fbc5f",
+    "skill_id": "debugging",
+    "previous_score": null,
+    "new_score": 84.75,
+    "score_status": "provisional",
+    "evidence_weight": 0.4,
+    "evidence_score": 84.75,
+    "formula": "cold_start_score = weighted_session_evidence_score",
+    "reason": "Cold start from 1 independent verified session(s); provisional evidence score 84.8.",
+    "session_breakdown": [
+      {
+        "session_id": "SESSION-DEMO-001",
+        "session_score": 84.75,
+        "raw_weight": 0.8534,
+        "capped_weight": 0.4,
+        "correlation_cap_applied": true,
+        "evidence": [
+          {
+            "evidence_id": "EV-5581d23458ac1d44",
+            "raw_performance_score": 92.0,
+            "hint_level": "level_1",
+            "hint_multiplier": 0.95,
+            "adjusted_performance_score": 89.9,
+            "strength": "strong",
+            "difficulty": "easy",
+            "reliability": 0.98,
+            "raw_weight": 0.2499,
+            "reason": "4/4 verified hidden tests passed for debugging."
+          },
+          {
+            "evidence_id": "EV-6e4e29ad75cc2559",
+            "raw_performance_score": 68.0,
+            "hint_level": "none",
+            "hint_multiplier": 1.0,
+            "adjusted_performance_score": 68.0,
+            "strength": "medium",
+            "difficulty": "easy",
+            "reliability": 0.82,
+            "raw_weight": 0.1394,
+            "reason": "Learner executed the program during diagnosis."
+          },
+          {
+            "evidence_id": "EV-344992d0940a8067",
+            "raw_performance_score": 88.0,
+            "hint_level": "none",
+            "hint_multiplier": 1.0,
+            "adjusted_performance_score": 88.0,
+            "strength": "strong",
+            "difficulty": "easy",
+            "reliability": 0.92,
+            "raw_weight": 0.2346,
+            "reason": "Learner tested a boundary input."
+          },
+          {
+            "evidence_id": "EV-823b1473e8e01962",
+            "raw_performance_score": 86.0,
+            "hint_level": "none",
+            "hint_multiplier": 1.0,
+            "adjusted_performance_score": 86.0,
+            "strength": "strong",
+            "difficulty": "easy",
+            "reliability": 0.9,
+            "raw_weight": 0.2295,
+            "reason": "Learner reproduced the failure before editing."
+          }
+        ]
+      }
+    ],
+    "excluded_evidence": []
+  },
+  "confidence": {
+    "algorithm_version": "skill-confidence/2.1.0",
+    "confidence": 0.2865,
+    "confidence_percent": 28.7,
+    "confidence_status": "low",
+    "formula": "confidence = weighted_five_factors * (0.30 + 0.70*independent_session_quantity)",
+    "reason": "Calculated from 1 independent verified session(s); multiple events in one session do not inflate quantity.",
+    "factors": {
+      "quantity": 0.2835,
+      "strength": 1.0,
+      "freshness": 0.9992,
+      "diversity": 0.25,
+      "consistency": 0.35
+    },
+    "counts": {
+      "evidence_items": 4,
+      "independent_sessions": 1,
+      "challenge_contexts": 1
+    },
+    "warnings": []
+  },
+  "updated_skill_mirror": {
+    "user_id": "U-DEMO",
+    "skills": [
+      {
+        "skill_id": "coding",
+        "score": 78,
+        "confidence": 0.81
+      },
+      {
+        "skill_id": "debugging",
+        "score": 84.75,
+        "confidence": 0.2865,
+        "subskills": [
+          {
+            "id": "boundary_awareness",
+            "score": null,
+            "confidence": 0.0
+          }
+        ],
+        "evidence_count": 4
+      },
+      {
+        "skill_id": "testing",
+        "score": 61,
+        "confidence": 0.42
+      },
+      {
+        "skill_id": "problem_solving",
+        "score": 70,
+        "confidence": 0.68
+      },
+      {
+        "skill_id": "code_reading",
+        "score": 74,
+        "confidence": 0.76
+      }
+    ]
+  },
+  "next_examiner": {
+    "target_skill": "testing",
+    "target_subskill": "test_case_design",
+    "difficulty": "medium",
+    "challenge_type": "testing_edge_cases",
+    "mode": "development",
+    "reason": "Mid-range evidence: continue balanced skill development. testing has the highest deterministic verification priority after recent-challenge penalty.",
+    "decision_source": "deterministic_information_gain",
+    "reasoning_source": "deterministic",
+    "priority_breakdown": {
+      "coding": {
+        "priority": 0.1845,
+        "confidence_gap": 0.19,
+        "unknown_bonus": 0.0,
+        "weakness_bonus": 0.0,
+        "no_evidence_bonus": 0.08,
+        "recent_repeat_penalty": 0.0,
+        "evidence_count": 0
+      },
+      "debugging": {
+        "priority": 0.0924,
+        "confidence_gap": 0.7135,
+        "unknown_bonus": 0.0,
+        "weakness_bonus": 0.0,
+        "no_evidence_bonus": 0.0,
+        "recent_repeat_penalty": 0.3,
+        "evidence_count": 1
+      },
+      "testing": {
+        "priority": 0.399,
+        "confidence_gap": 0.58,
+        "unknown_bonus": 0.0,
+        "weakness_bonus": 0.0,
+        "no_evidence_bonus": 0.08,
+        "recent_repeat_penalty": 0.0,
+        "evidence_count": 0
+      },
+      "problem_solving": {
+        "priority": 0.176,
+        "confidence_gap": 0.32,
+        "unknown_bonus": 0.0,
+        "weakness_bonus": 0.0,
+        "no_evidence_bonus": 0.0,
+        "recent_repeat_penalty": 0.0,
+        "evidence_count": 1
+      },
+      "code_reading": {
+        "priority": 0.212,
+        "confidence_gap": 0.24,
+        "unknown_bonus": 0.0,
+        "weakness_bonus": 0.0,
+        "no_evidence_bonus": 0.08,
+        "recent_repeat_penalty": 0.0,
+        "evidence_count": 0
+      }
+    }
+  }
+}

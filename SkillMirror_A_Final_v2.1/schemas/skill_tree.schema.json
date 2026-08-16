@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SkillMirror Programming Skill Tree",
+  "type": "object",
+  "required": ["project", "version", "scenario", "language", "target_user", "root_skill", "design_notes"],
+  "properties": {
+    "project": {"const": "SkillMirror"},
+    "version": {"type": "string"},
+    "scenario": {"const": "Programming Skill Assessment"},
+    "language": {"const": "Python"},
+    "target_user": {"type": "string"},
+    "root_skill": {
+      "type": "object",
+      "required": ["id", "name", "name_zh", "children"],
+      "properties": {
+        "id": {"const": "programming_ability"},
+        "name": {"type": "string"},
+        "name_zh": {"type": "string"},
+        "children": {
+          "type": "array", "minItems": 5,
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "name_zh", "source", "children"],
+            "properties": {
+              "id": {"type": "string"}, "name": {"type": "string"},
+              "name_zh": {"type": "string"}, "source": {"type": "string"},
+              "children": {
+                "type": "array", "minItems": 1,
+                "items": {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["id", "name", "name_zh"],
+                  "properties": {
+                    "id": {"type": "string"}, "name": {"type": "string"}, "name_zh": {"type": "string"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "design_notes": {"type": "object"}
+  }
+}
