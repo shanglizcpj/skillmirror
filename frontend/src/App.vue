@@ -1,6 +1,7 @@
 <script setup>
 import AppHeader from './components/AppHeader.vue'
 import AppFooter from './components/AppFooter.vue'
+import DemoIdentityNotice from './components/DemoIdentityNotice.vue'
 </script>
 
 <template>
@@ -8,6 +9,8 @@ import AppFooter from './components/AppFooter.vue'
     <AppHeader />
 
     <main class="page-container">
+      <DemoIdentityNotice />
+
       <router-view v-slot="{ Component }">
         <transition
           name="page"

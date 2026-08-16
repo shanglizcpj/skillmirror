@@ -247,7 +247,7 @@ def get_public_assessment_report(
             ),
             "rejected_history_count": _list_count(
                 latest_trust_report.get(
-                    "rejected_history"
+                    "rejected_evidence_history"
                 )
             ),
             "replayed_evidence_count": _list_count(

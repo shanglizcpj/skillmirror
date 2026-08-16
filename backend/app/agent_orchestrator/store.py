@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from threading import RLock
@@ -64,9 +66,21 @@ class SQLiteChallengeStore:
 
         return connection
 
+    @contextmanager
+    def _connection(
+        self,
+    ) -> Iterator[sqlite3.Connection]:
+        connection = self._connect()
+
+        try:
+            with connection:
+                yield connection
+        finally:
+            connection.close()
+
     def _initialize(self) -> None:
         with self._lock:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 connection.execute(
                     """
                     CREATE TABLE IF NOT EXISTS agent_challenge_sessions (
@@ -135,7 +149,7 @@ class SQLiteChallengeStore:
         now = utc_now()
 
         with self._lock:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 connection.execute(
                     """
                     INSERT INTO agent_challenge_sessions (
@@ -188,7 +202,7 @@ class SQLiteChallengeStore:
         session_id: str,
     ) -> dict[str, Any] | None:
         with self._lock:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 row = connection.execute(
                     """
                     SELECT *
@@ -228,7 +242,7 @@ class SQLiteChallengeStore:
         session_id: str,
     ) -> bool:
         with self._lock:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 cursor = connection.execute(
                     """
                     UPDATE agent_challenge_sessions

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from threading import RLock
 from typing import Any
@@ -44,9 +46,21 @@ class SQLiteRuntimeRecordStore:
 
         return connection
 
+    @contextmanager
+    def _connection(
+        self,
+    ) -> Iterator[sqlite3.Connection]:
+        connection = self._connect()
+
+        try:
+            with connection:
+                yield connection
+        finally:
+            connection.close()
+            
     def _initialize(self) -> None:
         with self._lock:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 connection.execute(
                     """
                     CREATE TABLE IF NOT EXISTS b_runtime_records (
@@ -84,7 +98,7 @@ class SQLiteRuntimeRecordStore:
         record: dict[str, Any],
     ) -> None:
         with self._lock:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 connection.execute(
                     """
                     INSERT INTO b_runtime_records (
@@ -116,7 +130,7 @@ class SQLiteRuntimeRecordStore:
         record_type: str | None = None,
     ) -> int:
         with self._lock:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 if record_type is None:
                     row = connection.execute(
                         """
@@ -147,7 +161,7 @@ class SQLiteRuntimeRecordStore:
         session_id: str,
     ) -> list[dict[str, Any]]:
         with self._lock:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 rows = connection.execute(
                     """
                     SELECT payload_json

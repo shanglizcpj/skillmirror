@@ -1,20 +1,22 @@
+from __future__ import annotations
+
+from typing import Any
+from uuid import uuid4
+import json
 import os
 import shutil
 import subprocess
 import time
-from uuid import uuid4
 
 from app.core.config import get_settings
 
 
-class SandboxUnavailableError(
-    RuntimeError
-):
+class SandboxUnavailableError(RuntimeError):
     pass
 
 
 def normalize_timeout_output(
-    output,
+    output: Any,
 ) -> str:
     if output is None:
         return ""
@@ -79,17 +81,20 @@ def check_sandbox_available() -> None:
         )
 
 
-def execute_python(
+def execute_test_suite(
+    *,
     code: str,
+    entry_point: str,
+    test_cases: list[dict[str, Any]],
     timeout_seconds: int = 3,
-) -> dict:
+) -> dict[str, Any]:
     settings = get_settings()
 
     check_sandbox_available()
 
     container_name = (
-        f"skillmirror-run-"
-        f"{uuid4().hex[:12]}"
+        "skillmirror-test-"
+        + uuid4().hex[:12]
     )
 
     command = [
@@ -121,6 +126,16 @@ def execute_python(
         settings.sandbox_image,
     ]
 
+    payload = json.dumps(
+        {
+            "code": code,
+            "entry_point": entry_point,
+            "test_cases": test_cases,
+        },
+        ensure_ascii=False,
+        separators=(",", ":"),
+    )
+
     creation_flags = 0
 
     if os.name == "nt":
@@ -133,7 +148,7 @@ def execute_python(
     try:
         completed = subprocess.run(
             command,
-            input=code,
+            input=payload,
             capture_output=True,
             text=True,
             encoding="utf-8",
@@ -150,22 +165,69 @@ def execute_python(
 
         exit_code = completed.returncode
 
-        if exit_code == 0:
-            execution_status = "success"
-        elif exit_code == 120:
-            execution_status = "output_limit"
-        elif exit_code in {137, 143}:
-            execution_status = "resource_limit"
-        else:
-            execution_status = "error"
+        if exit_code != 0:
+            return {
+                "status": (
+                    "resource_limit"
+                    if exit_code in {137, 143}
+                    else "error"
+                ),
+                "controller_result": None,
+                "stderr": completed.stderr[:500],
+                "exit_code": exit_code,
+                "runtime": runtime,
+                "sandbox_mode":
+                    "docker-isolated-controller",
+            }
+
+        # 必须是唯一、完整的JSON对象。
+        # 多余的学习者输出会导致解析失败，而不是被信任。
+        try:
+            controller_result = json.loads(
+                completed.stdout.strip()
+            )
+        except json.JSONDecodeError:
+            return {
+                "status": "error",
+                "controller_result": None,
+                "stderr": (
+                    "Sandbox controller returned "
+                    "invalid or contaminated JSON."
+                ),
+                "exit_code": exit_code,
+                "runtime": runtime,
+                "sandbox_mode":
+                    "docker-isolated-controller",
+            }
+
+        if (
+            not isinstance(controller_result, dict)
+            or controller_result.get(
+                "protocol_version"
+            ) != 2
+        ):
+            return {
+                "status": "error",
+                "controller_result": None,
+                "stderr": (
+                    "Sandbox controller protocol "
+                    "validation failed."
+                ),
+                "exit_code": exit_code,
+                "runtime": runtime,
+                "sandbox_mode":
+                    "docker-isolated-controller",
+            }
 
         return {
-            "status": execution_status,
-            "stdout": completed.stdout,
-            "stderr": completed.stderr,
+            "status": "success",
+            "controller_result":
+                controller_result,
+            "stderr": "",
             "exit_code": exit_code,
             "runtime": runtime,
-            "sandbox_mode": "docker",
+            "sandbox_mode":
+                "docker-isolated-controller",
         }
 
     except subprocess.TimeoutExpired as error:
@@ -178,17 +240,15 @@ def execute_python(
 
         return {
             "status": "timeout",
-            "stdout": normalize_timeout_output(
-                error.stdout
-            ),
+            "controller_result": None,
             "stderr": (
                 "Execution timed out. "
-                f"Maximum time: "
-                f"{timeout_seconds} seconds."
+                f"Maximum time: {timeout_seconds} seconds."
             ),
             "exit_code": None,
             "runtime": runtime,
-            "sandbox_mode": "docker",
+            "sandbox_mode":
+                "docker-isolated-controller",
         }
 
     except OSError as error:
@@ -197,3 +257,16 @@ def execute_python(
         raise SandboxUnavailableError(
             f"Unable to start Docker: {error}"
         ) from error
+
+
+def execute_python(
+    code: str,
+    timeout_seconds: int = 3,
+) -> dict[str, Any]:
+    del code
+    del timeout_seconds
+
+    raise SandboxUnavailableError(
+        "Direct untrusted code execution is disabled. "
+        "Use the isolated test controller."
+    )

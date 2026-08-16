@@ -13,6 +13,42 @@ from .store import challenge_store
 class AssessmentError(RuntimeError):
     pass
 
+INTERNAL_RESPONSE_FIELDS = {
+    "provenance",
+    "signature",
+    "server_challenge",
+    "reference_solution",
+    "test_cases",
+    "hidden_bugs",
+    "validation_report",
+    "verification_records",
+}
+
+
+def sanitize_public_response(
+    value: Any,
+) -> Any:
+    """
+    递归删除只能由A和B可信后端持有的内部字段。
+
+    数据库中仍保存A返回的完整签名对象，
+    这里只清理发送给浏览器的响应副本。
+    """
+
+    if isinstance(value, dict):
+        return {
+            key: sanitize_public_response(child)
+            for key, child in value.items()
+            if key not in INTERNAL_RESPONSE_FIELDS
+        }
+
+    if isinstance(value, list):
+        return [
+            sanitize_public_response(child)
+            for child in value
+        ]
+
+    return value
 
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -236,8 +272,10 @@ class AssessmentService:
 
         challenge_store.mark_completed(session_id)
 
-        # 只返回前端展示需要的安全字段。
-        return {
+        # 只构造前端展示需要的字段。
+        # 完整A签名对象已经保存在B数据库中，
+        # 浏览器不能收到签名、隐藏测试或内部证明字段。
+        public_response = {
             "schema_version":
                 response.get("schema_version"),
 
@@ -248,7 +286,10 @@ class AssessmentService:
             "trust_report": trust_report,
 
             "evidence":
-                response["evidence_materialization"],
+                response.get(
+                    "evidence_materialization",
+                    {},
+                ),
 
             "score": response.get("score"),
             "confidence": response.get("confidence"),
@@ -259,6 +300,10 @@ class AssessmentService:
             "next_examiner":
                 response.get("next_examiner"),
         }
+
+        return sanitize_public_response(
+            public_response
+        )
 
 
 assessment_service = AssessmentService()

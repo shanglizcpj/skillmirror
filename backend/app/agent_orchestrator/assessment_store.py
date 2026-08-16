@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from threading import RLock
 from typing import Any
@@ -40,9 +42,21 @@ class SQLiteAssessmentStore:
 
         return connection
 
+    @contextmanager
+    def _connection(
+        self,
+    ) -> Iterator[sqlite3.Connection]:
+        connection = self._connect()
+
+        try:
+            with connection:
+                yield connection
+        finally:
+            connection.close()
+
     def _initialize(self) -> None:
         with self._lock:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 connection.execute(
                     """
                     CREATE TABLE IF NOT EXISTS assessment_results (
@@ -84,7 +98,7 @@ class SQLiteAssessmentStore:
         user_id: str,
     ) -> list[dict[str, Any]]:
         with self._lock:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 rows = connection.execute(
                     """
                     SELECT payload_json
@@ -105,7 +119,7 @@ class SQLiteAssessmentStore:
         user_id: str,
     ) -> list[dict[str, Any]]:
         with self._lock:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 rows = connection.execute(
                     """
                     SELECT challenge_summary_json
@@ -126,7 +140,7 @@ class SQLiteAssessmentStore:
         user_id: str,
     ) -> list[dict[str, Any]]:
         with self._lock:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 rows = connection.execute(
                     """
                     SELECT
@@ -212,7 +226,7 @@ class SQLiteAssessmentStore:
         now = utc_now()
 
         with self._lock:
-            with self._connect() as connection:
+            with self._connection() as connection:
                 connection.execute(
                     """
                     INSERT INTO assessment_results (
