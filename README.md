@@ -671,16 +671,14 @@ Docker Deployment Available
 Evidence-Driven Assessment Available
 ```
 
-## 22. License与开源说明
+## 22. License与使用说明
 
-比赛阶段代码仅用于项目展示、评审和团队内部协作。
+Copyright © 2026 SkillMirror Team. All rights reserved.
 
-正式公开前需要共同确认：
+本仓库当前作为比赛评审、项目展示和团队协作原型公开，不代表本项目已采用开源许可证。
 
-- 项目License
-- 第三方依赖License
-- 模型与数据来源
-- Challenge内容授权
-- 隐私声明
-- AI评分使用边界
-- 开源范围
+除相关法律法规或第三方许可证另有规定外，未经 SkillMirror 项目团队事先书面许可，不得复制、修改、分发、再许可或将本项目用于商业用途。
+
+项目使用的第三方框架、依赖库、模型及其他外部资源仍分别遵循其各自的许可证和使用条款。
+
+This competition prototype is provided for evaluation and demonstration purposes. No permission is granted for redistribution or commercial use without prior written permission from the SkillMirror project team.
